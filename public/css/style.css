@@ -1,0 +1,18 @@
+.container{
+  width: 80vw;
+  height: 100%;
+  font-size: 18px;
+  margin-left: 30px;  
+}
+
+.contain_chat{
+    background: beige;
+    width: 100%;
+    height: 900px;
+}
+
+.chat_div{
+    display: inline-block;
+    width: 100%;
+    /* height: 100%; */
+}
