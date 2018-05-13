@@ -20,12 +20,7 @@ io.on("connection",(socket)=>{
     //     createdAt: 123
     // });
 
-
-    // socket.emit('newMessage', {
-
-    // })
-
-
+ 
     socket.on('createMessage', (message)=>{
         console.log(message);
         //io.emit to everyone. socket.emit doesnt
