@@ -3,28 +3,23 @@ const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message');
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000; 
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
+const admin = 'Admin';
+
 
 app.use(express.static(publicPath));
 
 io.on("connection",(socket)=>{
     console.log('New user connected');
 
-    socket.emit('newMessage', {
-        from: 'Admin',
-        text: 'WELCOME JAY',
-        createdAt: new Date().getTime()
-    })
+    socket.emit('newMessage', generateMessage(admin, 'Welcome to the chat'))
 
-    socket.broadcast.emit('newMessage', {
-        from: 'Admin',
-        text: 'User JAY has joined ur chat',
-        createdAt: new Date().getTime()
-    })
+    socket.broadcast.emit('newMessage', generateMessage(admin, 'User JAY has joined ur chat'));
 
     // socket.emit('newEmail', {
     //     from: 'mike@email.com',
@@ -36,12 +31,7 @@ io.on("connection",(socket)=>{
     socket.on('createMessage', (message)=>{
         console.log(message);
         //io.emit to everyone. socket.emit doesnt
-        // UNCOMMENT LATER//
-        io.emit('newMessage', {
-            from: message.from,
-            text: message.text,
-            createdAt: new Date().getTime()
-        })
+        io.emit('newMessage', generateMessage(message.from, message.text))
 
         
 
@@ -54,6 +44,7 @@ io.on("connection",(socket)=>{
 
     socket.on('disconnect', ()=>{
         console.log('user disconnected')
+        socket.broadcast.emit('newMessage', generateMessage(admin, 'User JAY has disconnected'))
     });
 })
 
