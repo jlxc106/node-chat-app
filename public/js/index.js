@@ -3,7 +3,9 @@ $('<div>').addClass('chat_div').html("from: " + message.from + "       " + messa
 }
 
 
-
+$('#message-form').on('submit', function(e){
+    e.preventDefault();
+})
 
 var socket = io();
 
@@ -24,8 +26,9 @@ socket.on("connect", function() {
         socket.emit('createMessage', {
             from: user,
             text: text
+        }, function(data){
+            console.log(data);
         })
-
     });
 
 
@@ -37,6 +40,10 @@ socket.on("connect", function() {
 
 
 });
+
+
+
+
 
 socket.on("disconnect", function() {
 	console.log("Disconnected from server");
