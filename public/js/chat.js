@@ -1,6 +1,3 @@
-
-
-
 var socket = io();
 
 function scrollToBottom(){
@@ -53,13 +50,12 @@ $("#message-form").on("submit", function(e) {
     e.preventDefault();
 
     var messageTextbox = $("#input_message");
-    var user = $("#input_user").val() || 'User' ;
+    // var user = $("#input_user").val() || 'User' ;
     var text = messageTextbox.val();
 
     socket.emit(
         "createMessage",
         {
-            from: user,
             text: text
         },
         function() {
@@ -67,8 +63,6 @@ $("#message-form").on("submit", function(e) {
         }
     );
 });
-
-
 
 
 socket.on("newMessage", function(message) {
