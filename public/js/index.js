@@ -52,16 +52,35 @@ socket.on("disconnect", function() {
 });
 
 socket.on("newMessage", function(message) {
+    var formattedTime = moment(message.createdAt).format('h:mm a');
+    var template = $('#message-template').html();
+    var html = Mustache.render(template, {
+        text: message.text,
+        from: message.from,
+        createdAt: formattedTime
+    });
+    $('#messages').append(html);
 	// console.log("New message from", message.from);
     // console.log(message);
-    message.from = "User";
-	display_message(message);
+    // message.from = "User";
+	// display_message(message);
 });
 
 
 socket.on('newLocationMessage', function(message){
-    message.from = "Admin";
-    display_location(message);
+    var formattedTime = moment(message.createdAt).format('h:mm a');
+    var template = $("#location-message-template").html();
+    var html = Mustache.render(template, {
+        url: message.url,
+        from: message.from,
+        createdAt: formattedTime
+    })
+    $('#messages').append(html);
+
+    // message.from = "Admin";
+
+
+    // display_location(message);
 })
 
 var locationButton = $("#send-location");
