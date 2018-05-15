@@ -1,14 +1,16 @@
 function display_message(message) {
+    var formattedTime = moment(message.createdAt).format('h:mm a');
 	$("<li>")
 		.addClass("chat_div")
-		.html(`${message.from}:     ${message.text}`)
+		.html(`${message.from} ${formattedTime}:    ${message.text}`)
 		.appendTo(".chat__messages");
 }
 
 function display_location(message){
+    var formattedTime = moment(message.createdAt).format('h:mm a');
     var a = $('<a target="_blank">My current location</a>');
     a.attr('href', message.url);
-    $("<li>").addClass("chat_div").html(`${message.from}: `).append(a).appendTo(".chat__messages");
+    $("<li>").addClass("chat_div").html(`${message.from} ${formattedTime}: `).append(a).appendTo(".chat__messages");
 }
 
 
